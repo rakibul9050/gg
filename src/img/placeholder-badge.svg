@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <rect width="48" height="48" rx="24" fill="#1A1D26"/>
+  <circle cx="24" cy="24" r="16" stroke="#8892A4" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="24" y="24" text-anchor="middle" dominant-baseline="central" font-size="18">⚽</text>
+</svg>

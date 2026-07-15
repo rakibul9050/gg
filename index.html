@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AeroX Sports — Live Sports Streaming | Sport. Live. Unfiltered.</title>
+<meta name="description" content="Watch live sports free on AeroX Sports. Football, basketball, tennis, MMA and more — no login, no cost. Ultra HD streams with smart server auto-detection.">
+<meta name="keywords" content="live sports, free streaming, football live, basketball, tennis, MMA, sports streams, AeroX Sports">
+<meta name="author" content="AeroX Studio">
+<meta name="theme-color" content="#06080D">
+<meta property="og:title" content="AeroX Sports — Sport. Live. Unfiltered.">
+<meta property="og:description" content="Free live sports streaming. No login. No cost. Just sport.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AeroX Sports">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AeroX Sports — Live Sports Streaming">
+<meta name="twitter:description" content="Watch live sports free. Ultra HD streams with smart server auto-detection.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://streamed.pk">
+<link rel="dns-prefetch" href="https://streamed.pk">
+<link rel="preload" href="src/css/style.css" as="style">
+<link rel="preload" href="src/js/app.js" as="script">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/css/style.css">
+<link rel="prefetch" href="https://streamed.pk/api/sports" as="fetch" crossorigin>
+<link rel="prefetch" href="https://streamed.pk/api/matches/live" as="fetch" crossorigin>
+</head>
+<body>
+
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><span class="nav-logo-icon">⚡</span><span class="nav-logo-text">AeroX Sports</span></a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navMobileMenu">
+      <span class="nav-hamburger-line"></span>
+      <span class="nav-hamburger-line"></span>
+      <span class="nav-hamburger-line"></span>
+    </button>
+    <div class="nav-pills" id="navPills" role="tablist" aria-label="Sport categories"></div>
+    <div class="nav-actions">
+      <div class="nav-traffic-pill" id="navTrafficPill" title="Active users on AeroX Sports">
+        <span class="traffic-dot"></span>
+        <span class="traffic-text"><strong id="navTrafficCount">0</strong> online <span class="traffic-brand">on AeroX Sports</span></span>
+      </div>
+      <button class="nav-live-btn" id="liveCounterBtn" aria-label="Live matches">
+        <span class="live-dot"></span>
+        <span id="liveCountText">0 LIVE</span>
+      </button>
+      <button class="nav-search-btn" id="searchToggle" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile-menu" id="navMobileMenu" aria-hidden="true">
+    <div class="nav-mobile-pills" id="navMobilePills"></div>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-secondary"></div>
+  <div class="hero-particles"></div>
+  <div class="hero-content">
+    <div class="hero-live-badge"><span class="live-dot"></span> LIVE NOW</div>
+    <h1 class="hero-headline">
+      <span class="hero-word">SPORT.</span>
+      <span class="hero-word">LIVE.</span>
+      <span class="hero-word">UNFILTERED.</span>
+    </h1>
+    <p class="hero-sub">No login. No cost. Just sport.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" id="heroWatchBtn">▶ Watch Live Matches</button>
+      <button class="btn btn-ghost" id="heroScheduleBtn">📅 Today's Schedule</button>
+    </div>
+    <div class="hero-stats" id="heroStats">
+      <div class="hero-stat"><span class="hero-stat-num" id="statLive">0</span><span class="hero-stat-label">Live Now</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statEvents">0</span><span class="hero-stat-label">Events Today</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statSports">0</span><span class="hero-stat-label">Sports</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section scroll-reveal" id="liveSection">
+  <div class="section-header">
+    <h2 class="section-title"><span class="live-dot-lg"></span> Live Now</h2>
+    <span class="section-count" id="liveCount">0 matches</span>
+  </div>
+  <div class="match-grid" id="liveGrid" role="list" aria-label="Live matches"></div>
+</section>
+
+<section class="section scroll-reveal" id="todaySection">
+  <div class="section-header">
+    <h2 class="section-title">📅 Today's Matches</h2>
+    <button class="btn btn-toggle" id="popularToggle">All</button>
+  </div>
+  <div class="match-grid" id="todayGrid" role="list" aria-label="Today's matches"></div>
+</section>
+
+<section class="section scroll-reveal" id="browseSection">
+  <div class="section-header">
+    <h2 class="section-title">🏆 Browse by Sport</h2>
+    <button class="btn btn-toggle" id="browsePopularToggle">All</button>
+  </div>
+  <div class="sport-pills" id="sportPills" role="tablist" aria-label="Sports"></div>
+  <div class="match-grid" id="browseGrid" role="list" aria-label="Sport matches"></div>
+</section>
+
+<section class="section scroll-reveal" id="popularSection">
+  <div class="section-header">
+    <h2 class="section-title">🔥 Popular Matches</h2>
+  </div>
+  <div class="popular-scroll" id="popularScroll" role="list" aria-label="Popular matches"></div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">⚡ AeroX Sports</span>
+      <span class="footer-tagline">Sport. Live. Unfiltered.</span>
+    </div>
+    <div class="footer-links">
+      <a href="#">Home</a>
+      <a href="#">Sports</a>
+      <a href="#">Live</a>
+      <a href="#">Schedule</a>
+      <a href="admin.html" target="_blank" style="color:var(--accent);font-weight:500">⚙️ Admin</a>
+    </div>
+    <div class="footer-credit">
+      Made by <a href="https://rakibul.nexohost.online/" target="_blank" rel="noopener">Rakibul Islam joy</a>
+      &middot; Powered by <strong>AeroX Studio</strong> at <strong>InfinityForge</strong>
+    </div>
+    <p class="footer-legal">AeroX Sports aggregates publicly available stream links. We do not host, store, or distribute any media content.</p>
+    <p class="footer-copy">&copy; 2025 AeroX Sports</p>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="playerModal" role="dialog" aria-modal="true" aria-label="Video player">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Match</h3>
+      <div class="modal-header-actions">
+        <span class="stream-viewers" id="streamViewers" aria-live="polite"></span>
+        <span class="connection-quality" id="connectionQuality" aria-live="polite"></span>
+        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      </div>
+    </div>
+    <div class="modal-player-wrap">
+      <div class="modal-progress" id="modalProgress" aria-hidden="true">
+        <div class="modal-progress-bar" id="modalProgressBar"></div>
+      </div>
+      <div class="server-analyzer-overlay" id="serverAnalyzerOverlay">
+        <div class="analyzer-spinner"></div>
+        <div class="analyzer-status" id="analyzerStatus">Connecting to AeroX Sports network...</div>
+        <div class="analyzer-sub" id="analyzerSub">Detecting fastest server for your region...</div>
+      </div>
+      <iframe class="modal-iframe" id="modalIframe" allow="autoplay; encrypted-media" allowfullscreen title="Live stream player"></iframe>
+    </div>
+    <div class="modal-streams" id="modalStreams"></div>
+    <div class="modal-info" id="modalInfo"></div>
+  </div>
+</div>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Search matches">
+  <div class="search-bg" id="searchBackdrop"></div>
+  <div class="search-panel">
+    <div class="search-input-wrap">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search matches..." autocomplete="off">
+      <button class="search-clear" id="searchClear" aria-label="Clear">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<div class="toast-box" id="toastContainer"></div>
+
+<script src="src/js/app.js"></script>
+</body>
+</html>
